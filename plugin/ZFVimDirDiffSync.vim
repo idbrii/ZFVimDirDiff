@@ -1,10 +1,14 @@
 
 " ============================================================
 function! ZF_DirDiff_mkdir(path)
-    if has('unix')
-        silent execute '!mkdir -p "' . a:path . '"'
-    elseif has('win32')
-        silent execute '!mkdir "' . substitute(a:path, '/', '\', 'g') . '"'
+    if exists("*mkdir")
+        call mkdir(a:path, 'p')
+    else
+        if has('unix')
+            silent execute '!mkdir -p "' . a:path . '"'
+        elseif has('win32')
+            silent execute '!mkdir "' . substitute(a:path, '/', '\', 'g') . '"'
+        endif
     endif
 endfunction
 
